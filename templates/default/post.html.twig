@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+{% block title %}Session Page in DefaultController!{% endblock %}
+
+{% block body %}
+
+    Post PaGE :
+
+    {% for post in posts %}
+
+        {{ post }} <br>
+
+    {% endfor %}
+
+{% endblock %}

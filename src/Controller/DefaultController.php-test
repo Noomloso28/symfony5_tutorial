@@ -1,0 +1,16 @@
+<?php
+namespace App\Controller;
+
+use Symfony\Flex\Response;
+
+use Symfony\Component\HttpFoundation\Response as ResponseView;
+
+class DefaultController{
+
+	function index(){
+
+		return new ResponseView(
+			'<p> Hello World !! </p>'
+		);
+	}
+}

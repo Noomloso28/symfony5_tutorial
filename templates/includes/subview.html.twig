@@ -1,0 +1,26 @@
+include file !!!!
+{{ varible }}
+
+{% dump(varible) %}
+
+
+{% for i in 1..10 %}
+
+
+    <div class="{{ cycle(['even', 'odd'], i) }}">
+        {{ i }}
+    </div>
+
+
+
+{% endfor %}
+
+url path :   {{ path('session') }} <br>
+url full : {{ url('session') }}<br>
+image url : {{ asset('images/hamburger.jpg') }} <br>
+images full url {{  absolute_url('images/hamburger.jpg') }}
+
+{{ varible |escape('js') }} js is type for use.
+<br>
+
+

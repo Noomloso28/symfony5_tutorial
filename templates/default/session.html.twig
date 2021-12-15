@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+{% block title %}Session Page in DefaultController!{% endblock %}
+
+{% block body %}
+
+    Session PaGE : {{ test_varible | upper }}
+
+    <br>
+    Include file .twig
+    <br>
+
+    {{ include('includes/subview.html.twig', { 'varible' : 'passes varible'}) }}
+
+
+    {{ app.user }} || {{ app.request.get('param') }} || {{ app.environment }}
+    ||
+    {{dump(app.session) }}
+
+{% endblock %}
