@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Services\GiftsServices;
+use Couchbase\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -58,7 +59,6 @@ class DefaultController extends AbstractController
 		$res->headers->setCookie( $cookies );
 		///Clear cookies //$res->headers->clearCookie('cookies_name');
 		$res->sendHeaders();
-
 
 
 
@@ -135,12 +135,113 @@ class DefaultController extends AbstractController
 	 */
 	public function posts(){
 
+		/*
+		 * Add user to database.
+		 */
+		/*$entityManager = $this->getDoctrine()->getManager();
+		$user = new Users();
+		$user->setName('Noom');
+		$entityManager->persist( $user );
+		$entityManager->flush();
+
+		dump('A new user was saved with the id of '. $user->getId() );
+		*/
+
+
+		/*
+		 * ################# read users from db. ##########################
+		 */
+		//$respository = $this->getDoctrine()->getRepository( Users::class);
+		// $user = $respository->find(1); //get by id
+		//$user = $respository->findOneBy( ['name' => 'Noom', 'id' => 5] );
+		//$user = $respository->findAll();
+
+		//$user = $respository->findBy([ 'name' => 'Jame'], ['id' => 'DESC']);
+
+		//dump( $user );
+
+		/*
+		 * ####################### Update data to db.
+		 */
+		/* $entityManager = $this->getDoctrine()->getManager();
+		$id = 2;
+		$user = $entityManager->getRepository(Users::class)->find($id);
+		if( !$user ){
+			throw $this->createNotFoundException( 'Not Found the user');
+		}
+		$user->setName('new Pradow');
+		$entityManager->flush();
+		dump($user);
+		*/
+
+		/*
+		 * Removed the user in DB.
+		 */
+		/*$entityManager = $this->getDoctrine()->getManager();
+		$id = 6;
+		$user = $entityManager->getRepository(Users::class)->find($id);
+		if( !$user ){
+			throw $this->createNotFoundException( 'Not Found the user');
+		}
+		$entityManager->remove($user);
+		$entityManager->flush();*/
+
+
+		/*
+		 * Raw query db.
+		 * **** Mark not work.
+		 */
+		/*$entityManager = $this->getDoctrine()->getManager();
+		$conn = $this->getDoctrine()->getConnections();
+		$sql = '
+			SELECT * FROM users u WHERE u.id > :id
+		';
+		$stmt = $conn->prepare();
+		*/
+
+
+
+
+
 		$post = ['post 1', 'post 2', 'post 3', 'post 4'];
 
 		return $this->render('default/post.html.twig',[
 			'posts' => $post
 		]);
 
+	}
+
+	/**
+	 * @Route("/example/{id}", name="example")
+	 */
+	public function example(Request $request, Users $users){
+
+		/*
+		 * This method have helper for get data in database by URL key.
+		 * composer require sensio/framework-extra-bundle
+		 */
+
+		dump( $users );
+
+		return $this->render('default/post.html.twig',[
+			'posts' => array()
+		]);
+	}
+
+	/**
+	 * @Route("/cycle",name="cycle")
+	 */
+	public function cycle(Request $request){
+
+		$entityManager = $this->getDoctrine()->getManager();
+		$user = new Users();
+		$user->setName('Sanook');
+		$entityManager->persist( $user );
+		$entityManager->flush();
+
+		return $this->render('default/post.html.twig',[
+			'posts' => array()
+		]);
 	}
 
 

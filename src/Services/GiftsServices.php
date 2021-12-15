@@ -5,7 +5,7 @@ use Psr\Log\LoggerInterface;
 
 class GiftsServices{
 
-	public  $gifts = ['Books','flowers','Computer','Spoon'];
+	public  $gifts = ['Books','flowers','Computer','Spoon' , 'Bit'];
 
 	public function __construct( LoggerInterface $logger )
 	{
