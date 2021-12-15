@@ -4,11 +4,16 @@ namespace App\Controller;
 
 use App\Services\GiftsServices;
 use Couchbase\User;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 use App\Entity\Users;
+use App\Entity\Video;
+
+use App\Entity\Category;
+use App\Entity\Product;
 
 //cookies
 use Symfony\Component\HttpFoundation\Cookie;
@@ -242,6 +247,63 @@ class DefaultController extends AbstractController
 		return $this->render('default/post.html.twig',[
 			'posts' => array()
 		]);
+	}
+	/**
+	 * @Route("/relation",name="relation")
+	 */
+	public function relation(Request $request){
+
+		/*$entityManager = $this->getDoctrine()->getManager();
+
+		$user = new Users();
+		$user->setName('RobertoCarlos');
+
+		for ($i=1; $i<=3; $i++){
+			$video = new Video();
+			$video->setTitle('Video Title - '. $i);
+			$user->addVideo( $video );
+			$entityManager->persist($video);
+		}
+
+		$entityManager->persist($user);
+		$entityManager->flush();
+
+		dump('Created videos with id of '. $video->getId() );
+		dump('Created user with id of '. $user->getId() );
+		*/
+
+		return $this->render('default/post.html.twig',[
+			'posts' => array()
+		]);
+	}
+
+	/**
+	 * @Route("/products",name="products")
+	 */
+	public function products(ManagerRegistry $doctrine) : Response
+	{
+
+		$category = new Category();
+		$category->setName('Computer Peripherals');
+
+		$product = new Product();
+		$product->setName('Keyboard');
+		$product->setPrice(19.99);
+		$product->setDescription('Ergonomic and stylish!');
+
+		// relates this product to the category
+		$product->setCategory($category);
+
+		$entityManager = $doctrine->getManager();
+		$entityManager->persist($category);
+		$entityManager->persist($product);
+		$entityManager->flush();
+
+		return new Response(
+			'Saved new product with id: '.$product->getId()
+			.' and new category with id: '.$category->getId()
+		);
+
 	}
 
 
