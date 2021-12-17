@@ -305,6 +305,44 @@ class DefaultController extends AbstractController
 		);
 
 	}
+	/**
+	 * @Route("/productshow/{id}",name="productshow")
+	 */
+	public function productshow(ManagerRegistry $doctrine , int $id )
+	{
+		$product = $doctrine->getRepository(Product::class)->find($id);
+		$categoryName = $product->getCategory()->getName();
 
+		$category = $doctrine->getRepository(Category::class)->find($id);
+
+		$products = $category->getProducts();
+
+
+		/*
+		 * Now, you can use this method in your controller to query for a Product object and its related Category in one query:
+		 */
+
+		$product_find = $doctrine->getRepository(Product::class)->findOneByIdJoinedToCategory($id);
+
+		$category_find_name = $product_find->getCategory()->getName();
+
+
+
+
+
+		return new Response(
+			'product->getCategory()->getName name : '. $categoryName
+			.' <br> product->getName : '. $product->getName().
+			'<br> Category Product name : ' .$category_find_name
+		);
+	}
+
+	/**
+	 * @Route("/service", name="service")
+	 */
+	public function service()
+	{
+
+	}
 
 }
